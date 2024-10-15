@@ -1,0 +1,248 @@
+ls -l detallado.
+ls -a muestra todos hasta ocultos.
+ls -lh con h muestra el tamaño 
+ls -R los lista recursivamente
+tree muestra como arbol 
+
+------------------------------------------
+------------CD---------------------------
+
+cd solo va al HOME 
+OLDPWD ultimo directorio q estabamos 
+cd ~ tambien es HOME 
+cd . actual 
+cd .. directorio padre 
+cd ../../ dos niveles superiores
+cd - ultimo directorio q fuimos antes
+CDPATH: Esta variable especifica una lista de directorios que cd debería buscar si
+el usuario proporciona una ruta relativa
+
+si comienza con / ruta absoluta
+sino relativa al directorio q estamos
+
+pwd ruta donde estoy 
+
+---------------------------------------------
+--------------------CP---------------------
+
+
+cp origen destino - copia origen a destino. Si destino ya existe sera sobreescrito sin aviso. 
+EJ:
+cp archivo.txt /home/usuario/documentos/
+
+cp -r para copiar directorio con archivos
+cp -i solicita confirmacion  
+
+cp -u copia solo si destino es mas antiguo q el origen o si no existe. 
+
+cp -v muestra lo q esta haciendo el comando
+cp -p mantiene atributos originales
+cp -a dir origen dir destino -> equivale cp -r -p -d
+
+cp --backup archivo_origen archivo_destino 
+cp --parents  copia los archivos junto con su estructura completa de directorios.
+ 
+
+
+------------------------------------------------
+------------------MV------------------------
+equivale al cortar pegar
+mv archivo_fuente directorio_destino 
+mv archivo1 archivo2 archivo3 directorio_destino
+
+para renombrar los archivos 
+mv archivo_origen archivo_destino 
+
+------------------------------------------------
+------------------RM-------------------------
+
+elimina archivos 
+rm archivo 
+-i pregunta 
+-f fuerza la eliminacion 
+-d elimina direcotrios vacios 
+-r directorios no vacios 
+
+---------------------------------------------
+------------------MKDIR---------------------
+
+mkdir dire{1,2,3} 
+crea tres directorios: dire1, dire2,dire3
+
+subdirectorios
+mkdir -p proyecto/{src,bin,doc} 
+
+mkdir -p materias/{mate/{com1,com2,com3},lengua/{com1,com2,com3},biologia/{com1,com2}} 
+
+rmdir direcotrio : elimina dir vacios 
+
+-----------------------------------------
+df espacio en disco
+df -h espacio en disco de manera legible 
+du espacio en disco por archivos 
+du -sh espacio en disco por archivos de manera legible
+free cant de memo dispo y usada en el sistema
+uname info del sistema operativo
+-----------------------------------------
+chmod para cambiar permisos
+
+7 (4+2+1): Lectura, escritura y ejecución (rwx)
+6 (4+2): Lectura y escritura (rw-).
+5 (4+1): Lectura y ejecución (r-x).
+4 Solo lectura (r--)
+
+ejemplo: chmod 755 archivo
+el 7 para propietario, el 5 para grupo y el otro 5 otros usu
+
+otra forma
+chmod u=rwx,g=rx,o=rx archivo
+u de user g para grupo y o para otros
+
+chmod u+x archivo Esto otorga al propietario (u) el permiso de ejecución (+x) sin modificar los otros permisos.
+
+chmod g-w archivo Esto elimina el permiso de escritura (-w) para el grupo (g), manteniendo intactos los demás
+permisos.
+-----------------------------------------
+para cambiar propietario o grupo de un archivo
+
+chown usuario archivo 
+chown usuario:grupo archivo cambia los dos al mismo tiempo
+
+------------------------------------------
+REDIRECCION DE SALIDA
+------------------------------------------
+ls > listado.txt : mandas lo de ls a un archivo. 
+
+echo "hola jeje" >> archivo.txt se agregara al final del archivo hola jeje
+
+----------------------------------------------
+REDIRECCION DE ENTRADA
+---------------------------------------------
+cat < datos.txt
+
+------------------------------------------------
+REDIRECCION DE ERROR
+------------------------------------------------
+ls /directorio_no_existe 2> error.log
+solo manda los de error con el 2
+
+comando > salida.txt 2> error.log
+manda los de error por una parte y los otros a salida.txt
+
+ls /directorio /directorio_no_existe &> salida_y_errores.txt te manda todo al mismo archivo
+
+---------------------------------------------
+REDIRIGIR HACIA NULL
+-------------------------------------------
+comando > /dev/null lo manda al agujero negro 
+
+comando 2> /dev/null para error
+
+
+----------------------------------------------------
+TUBERIAS
+-------------------------------------------------
+La salida estandar de un comando sera la entrada de otro comando. 
+
+ls | grep asd | operador tuberia
+
+la salida de ls entra a grep y busca palabras con asd
+
+ejemplo
+
+cat archito.txt | sort | uniq 
+uniq elimina lineas duplicadas
+
+grep "error" archivo.log | wc -l 
+wc -l cuenta las veces q dice error
+
+sort -hr ordena descendente
+head -n 10 muestra los diez primeros archivos 
+
+
+awk '{print $2, $3, $4}' extrae columnas 
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+grep ola archivo.txt Esto buscará todas las líneas que contengan la palabra "ola" en archivo.txt
+
+grep "a.b" archivo.txt Esto coincidirá con cualquier cadena que tenga una "a", seguida de cualquier carácter, y
+luego una "b", como "acb", "a7b", o "a-b"
+
+grep "^inicio" archivo.txt Esto solo mostrará las líneas que comienzan con la palabra "inicio"
+
+
+grep "fin$" archivo.txt 
+
+grep "a*b" archivo.txt Esto coincide con cualquier número de "a" seguido de una "b", por ejemplo, "b", "ab", "aaab",
+etc.
+
+grep "a+b" archivo.txt Esto coincidirá con "ab", "aab", "aaab", etc., pero no con "b" solo.
+
+grep "colou?r" archivo.txt Esto coincidirá con "color" y "colour", haciendo opcional la "u".
+
+grep "a{3}" archivo.txt Esto buscará líneas que contengan exactamente tres "a" consecutivas, como "aaa".
+
+grep "a{2,}" archivo.txt Esto coincidirá con "aa", "aaa", "aaaa", etc
+
+grep "a{2,4}" archivo.txt Esto coincidirá con "aa", "aaa", o "aaaa", pero no con "a" ni con más de 4 "a".
+--------------------------------------------------
+--------------------------------------------------
+
+sed 's/error/warning/' archivo.log Esto reemplaza la primera aparición de la palabra "error" por "warning" en cada línea del
+archivo.
+
+awk '/error/ {print $1, $2}' archivo.log
+Esto busca líneas que contengan la palabra "error" y muestra solo la primera y segunda
+columna.
+--------------------------------------------------
+--------------------------------------------------
+ls archivo[abc].txt
+Esto coincidirá con archivoa.txt, archivob.txt, y archivoc.txt, pero no con
+otros archivos.
+
+ls archivo[0-9].txt
+Esto coincidirá con archivo1.txt, archivo2.txt, etc., hasta archivo9.txt,
+porque 0-9 define un rango de dígitos
+
+ls archivo[!a-c].txt
+Esto coincidirá con cualquier archivo que comience con "archivo" y termine en .txt, pero
+que no tenga las letras "a", "b", o "c" en esa posición.
+
+--------------------------------------------------
+--------------------------------------------------
+
+ls *.txt traeme todos los txt
+
+Eliminar archivos que sigan un patrón:
+rm temp_?.log
+
+Mover archivos dentro de un rango de nombres:
+mv informe[1-3].pdf /home/informes_antiguos/
+ 
+
+Filtrar archivos que no coincidan con un conjunto de caracteres:
+ls proyecto[!abc].txt
+Esto listará todos los archivos que comiencen con proyecto, terminen en .txt, y que
+no tengan "a", "b", o "c" en esa posición específica.
+ ---------------------------------------------------------------------
+ ----------------------------------------------------------------------
+ COSAS
+ 
+ 13)
+a- sort alumnos/mate/com1/nombres.txt & sort alumnos/mate/com1/nombres.txt > alumnos/mate/com1/nombresOrdenados.txt &
+
+b- grep "an" alumnos/mate/com1/nombres.txt 
+
+c- head -n -2 alumnos/mate/com2/nombres.txt > temp.txt ; mv temp.txt alumnos/mate/com2/nombres.txt
+
+14) b-
+
+
+cat nombres.txt | sort -r | head -n 2 >> ~/Desktop/alumnos/mate/com1/nombres.txt ; cp ~/Desktop/alumnos/mate/com1/nombres.txt ~/Desktop/combinados.txt
+
+
+sort archivo.txt -o archivo.txt ordena y guarda
+sort -k2 archivo.txt -o archivo.txt ordena y guarda por columna 2
+head -n 2 obtiene los primeros 2
+head -n -2 obtiene todos menos los ultimos dos
